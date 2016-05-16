@@ -18,6 +18,9 @@ public class PaymentDatabaseHelper extends SQLiteOpenHelper {
     final String SQL_CREATE_ALIPAY_TABLE="create table alipay(account varchar(40) primary key," +
                                                                  "password varchar(40)," +
                                                                  " balance REAL)";
+    final String SQL_CREATE_BANK_TABLE="create table bank (account varchar(40) primary key," +
+                                                                  "password varchar(40)," +
+                                                                  "balance REAL)";
     public PaymentDatabaseHelper(Context context,String name,int version)
     {
         super(context,name,null,version);
@@ -25,26 +28,27 @@ public class PaymentDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database)
     {
-        Object [] initial={111,2004,1,150,true};
-        Object []ini2={111,2004,2,300,true};
+        System.out.println("create!!");
+        Object [] initial={"15221399767",2004,1,150,true};
+        Object []ini2={"17717090597",2004,2,300,true};
         database.execSQL(SQL_CREATE_TABLE);
+        database.execSQL(SQL_CREATE_ALIPAY_TABLE);
+        database.execSQL(SQL_CREATE_BANK_TABLE);
         database.execSQL("insert into payrecord values(null,?,?,?,?,?)",initial);
         database.execSQL("insert into payrecord values(null,?,?,?,?,?)",ini2);
-
+        database.execSQL("insert into alipay values(1,123,1000)");
+        database.execSQL("insert into bank values(1,123,1000)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase database,int oldversion, int newversion)
     {
-        System.out.println("call update");
+
     }
     @Override
     public void onOpen(SQLiteDatabase database)
     {
         super.onOpen(database);
     }
-    public void insertData(SQLiteDatabase db,String phonenumber,int year,int month,int minutes,boolean haspaid)
-    {
-        db.execSQL("insert into payrecord values(null,?,?,?,?,?)",new Object[]{phonenumber,year,month,minutes,haspaid});
-    }
+
 
 }
