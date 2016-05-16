@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
         inputPhoneNumBtn = (Button)findViewById(R.id.submitPhoneNum);
         inputPhomeNumtext =(EditText)findViewById(R.id.phoneNum);
 
-        PhoneBill bill=queryBill("111");
-        System.out.println(bill.getMoneyToPay());
 
         inputPhoneNumBtn.setOnClickListener(
                 new View.OnClickListener(){
@@ -117,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         {
             owingMoneyBeforeThisYear+=(cursor.getInt(0)*0.25+25);
         }
-        database.query("payrecord",new String[]{"minute"},"phonenumber=? and year=? and month=?",new String [] {phoneNumber,Integer.toString(year),Integer.toString(month)},null,null,null);
+        cursor=database.query("payrecord",new String[]{"minute"},"phonenumber=? and year=? and month=?",new String [] {phoneNumber,Integer.toString(year),Integer.toString(month)},null,null,null);
         /*cursor=databaseHelper.getReadableDatabase().rawQuery("select minute from payrecord" +
                 "where phonenumber=?and year=?and month=?",new String[]{phoneNumber,Integer.toString(year),Integer.toString(month)});*/
 
