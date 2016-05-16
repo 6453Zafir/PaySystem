@@ -1,33 +1,36 @@
 package com.example.admin.payment;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.SystemClock;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import java.io.File;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
-    private SQLiteDatabase db;
-   private PaymentDatabaseHelper databaseHelper;
+
+    public Button inputPhoneNumBtn;
+    public EditText inputPhomeNumtext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseHelper=new PaymentDatabaseHelper(getApplicationContext(),"payment",1);
-      //  queryRecord();
+        inputPhoneNumBtn = (Button)findViewById(R.id.submitPhoneNum);
+        inputPhomeNumtext =(EditText)findViewById(R.id.phoneNum);
+
+        inputPhoneNumBtn.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+                        isphoneNumExist(inputPhomeNumtext.getText().toString());
+                    }
+                }
+        );
     }
 
-    private void queryRecord(String phonenumber)
-    {
-        Cursor cursor=databaseHelper.getReadableDatabase().rawQuery("select * from payrecord",null);
-        while (cursor.moveToNext())
-        {
-            System.out.println(cursor.getInt(1));
-            System.out.println(cursor.getString(2));
-        }
+    public boolean isphoneNumExist(String phoneNum){
+    return true;
     }
 }

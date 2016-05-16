@@ -9,8 +9,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.admin.payment.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请输入您要缴费的手机号："
+            android:id="@+id/textView"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/phoneNum"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:id="@+id/submitPhoneNum"
+            android:background="@drawable/radiousforsignin"
+            android:textColor="#ffffff"
+            android:singleLine="true"
+            android:textSize="20sp" />
+    </LinearLayout>
 </RelativeLayout>
