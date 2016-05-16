@@ -15,6 +15,9 @@ public class PaymentDatabaseHelper extends SQLiteOpenHelper {
                                                                  ",month integer," +
                                                                  "minute BIGINT," +
                                                                  "hasPaid BOOLEAN)";
+    final String SQL_CREATE_ALIPAY_TABLE="create table alipay(account varchar(40) primary key," +
+                                                                 "password varchar(40)," +
+                                                                 " balance REAL)";
     public PaymentDatabaseHelper(Context context,String name,int version)
     {
         super(context,name,null,version);
@@ -39,4 +42,9 @@ public class PaymentDatabaseHelper extends SQLiteOpenHelper {
     {
         super.onOpen(database);
     }
+    public void insertData(SQLiteDatabase db,String phonenumber,int year,int month,int minutes,boolean haspaid)
+    {
+        db.execSQL("insert into payrecord values(null,?,?,?,?,?)",new Object[]{phonenumber,year,month,minutes,haspaid});
+    }
+
 }
