@@ -3,6 +3,7 @@ package com.example.admin.payment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
         inputPhoneNumBtn = (Button)findViewById(R.id.submitPhoneNum);
         inputPhomeNumtext =(EditText)findViewById(R.id.phoneNum);
+
+        PhoneBill bill=queryBill("111");
+        System.out.println(bill.getMoneyToPay());
 
         inputPhoneNumBtn.setOnClickListener(
                 new View.OnClickListener(){
@@ -98,23 +102,26 @@ public class MainActivity extends AppCompatActivity {
         PhoneBill bill;
         int notPaidNumThisYear;
         float owingMoneyBeforeThisYear=0;
-        int thisMonthMinutes;
+        int thisMonthMinutes=0;
         float moneyToPay=0;
-        cursor=databaseHelper.getReadableDatabase().rawQuery("select count* from payrecord" +
+        SQLiteDatabase database= databaseHelper.getReadableDatabase();
+        cursor=database.query("payrecord",new String[]{"id"},"phonenumber=? and year=? and hasPaid=0",new String[]{phoneNumber,Integer.toString(year)},null,null,null);
+        /*cursor=databaseHelper.getReadableDatabase().rawQuery("select count* from payrecord" +
                 " where phonenumber=? and year=? and hasPaid=false",new String[]{phoneNumber,Integer.toString(year)});
-
-        cursor.moveToNext();
-        notPaidNumThisYear=cursor.getInt(0);
+*/
+        notPaidNumThisYear=cursor.getCount();
 
         cursor=databaseHelper.getReadableDatabase().rawQuery("select minute from payrecord " +
-                "where phonenumber=? and year<? and hasPaid=false",new String[]{phoneNumber,Integer.toString(year)});
+                "where phonenumber=? and year<? and hasPaid=0",new String[]{phoneNumber,Integer.toString(year)});
         while(cursor.moveToNext())
         {
             owingMoneyBeforeThisYear+=(cursor.getInt(0)*0.25+25);
         }
-        cursor=databaseHelper.getReadableDatabase().rawQuery("select minute from payrecord" +
-                "where phonenumber=?and year=?and month=?",new String[]{phoneNumber,Integer.toString(year),Integer.toString(month)});
-        cursor.moveToNext();
+        database.query("payrecord",new String[]{"minute"},"phonenumber=? and year=? and month=?",new String [] {phoneNumber,Integer.toString(year),Integer.toString(month)},null,null,null);
+        /*cursor=databaseHelper.getReadableDatabase().rawQuery("select minute from payrecord" +
+                "where phonenumber=?and year=?and month=?",new String[]{phoneNumber,Integer.toString(year),Integer.toString(month)});*/
+
+        if(cursor.moveToNext())
         thisMonthMinutes=cursor.getInt(0);
 
         if(thisMonthMinutes<=60&&thisMonthMinutes>0)
