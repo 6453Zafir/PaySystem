@@ -21,7 +21,8 @@
         <activity
             android:name=".ChoosePayway"
             android:label="请选择支付方式" />
-        <activity android:name=".Printlist"></activity>
+        <activity android:name=".Printlist"
+            android:label="打印账单" ></activity>
     </application>
 
 </manifest>

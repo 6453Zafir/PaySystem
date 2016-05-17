@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class PayActivity extends AppCompatActivity {
 
     private Float fee;
@@ -41,7 +46,7 @@ public class PayActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         final String phoneNum = extras.getString("phoneNum");
-        String payway = extras.getString("PayWay");
+        final String payway = extras.getString("PayWay");
         fee = extras.getFloat("fee");
 
         Button submitBtn = (Button)findViewById(R.id.submit);
@@ -66,6 +71,13 @@ public class PayActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),Printlist.class);
+                                            intent.putExtra("fee",fee);
+                                            intent.putExtra("PayWay",payway);
+                                            intent.putExtra("PhoneNum",phoneNum);
+                                            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                                            Date today = Calendar.getInstance().getTime();
+                                            String reportDate = df.format(today);
+                                            intent.putExtra("Paytime",reportDate);
                                             startActivity(intent);
                                         }
                                     })
@@ -110,6 +122,8 @@ public class PayActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee);
                                             startActivity(intent);
                                         }
                                     })
