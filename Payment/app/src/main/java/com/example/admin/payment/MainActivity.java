@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private AlertDialog alert = null;
     private AlertDialog.Builder builder = null;
-    private AlertDialog.Builder buildernew = null;
     private Context mContext;
     private View billlist;
     private PaymentDatabaseHelper databaseHelper;
@@ -36,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         databaseHelper=new PaymentDatabaseHelper(getApplicationContext(),"payment",1);
+
         mContext = MainActivity.this;
 
         inputPhoneNumBtn = (Button)findViewById(R.id.submitPhoneNum);
         inputPhomeNumtext =(EditText)findViewById(R.id.phoneNum);
-
 
         inputPhoneNumBtn.setOnClickListener(
                 new View.OnClickListener(){

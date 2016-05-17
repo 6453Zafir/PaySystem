@@ -28,7 +28,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/account"
+            android:id="@+id/accountinput"
             android:textSize="20sp" />
 
         <TextView
@@ -43,14 +43,14 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/password"
+            android:id="@+id/passwordinput"
             android:textSize="20sp" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="确认支付"
-            android:id="@+id/button2"
+            android:id="@+id/submit"
             android:background="@drawable/radiousforsignin"
             android:textColor="#ffffff"
             android:textSize="20sp"
