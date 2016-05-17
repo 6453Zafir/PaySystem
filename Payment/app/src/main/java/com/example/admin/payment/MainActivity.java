@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private View billlist;
     private PaymentDatabaseHelper databaseHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper=new PaymentDatabaseHelper(getApplicationContext(),"payment",1);
 
         mContext = MainActivity.this;
+
+        insertData();//只运行一次
 
         inputPhoneNumBtn = (Button)findViewById(R.id.submitPhoneNum);
         inputPhomeNumtext =(EditText)findViewById(R.id.phoneNum);
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 "where phonenumber=? and year<? and hasPaid=0",new String[]{phoneNumber,Integer.toString(year)});
         while(cursor.moveToNext())
         {
-            owingMoneyBeforeThisYear+=(cursor.getInt(0)*0.25+25);
+            owingMoneyBeforeThisYear+=(cursor.getInt(0)*0.15+25);
         }
         cursor=database.query("payrecord",new String[]{"minute"},"phonenumber=? and year=? and month=?",new String [] {phoneNumber,Integer.toString(year),Integer.toString(month)},null,null,null);
         /*cursor=databaseHelper.getReadableDatabase().rawQuery("select minute from payrecord" +
@@ -148,40 +149,231 @@ public class MainActivity extends AppCompatActivity {
         if(cursor.moveToNext())
         thisMonthMinutes=cursor.getInt(0);
 
-        if(thisMonthMinutes<=60&&thisMonthMinutes>0)
+         if(thisMonthMinutes<=60&&thisMonthMinutes>0)
         {
             if(notPaidNumThisYear>1)
-                moneyToPay+=(thisMonthMinutes*0.25+25);
-            else moneyToPay+=(thisMonthMinutes*0.25+25)*0.099;
+                moneyToPay+=(thisMonthMinutes*0.15+25);
+            else moneyToPay+=(thisMonthMinutes*0.15+25)*0.099;
         }
         else if(thisMonthMinutes<=120&&thisMonthMinutes>60)
         {
             if(notPaidNumThisYear>2)
-                moneyToPay+=(thisMonthMinutes*0.25+25);
-            else moneyToPay+=(thisMonthMinutes*0.25+25)*0.985;
+                moneyToPay+=(thisMonthMinutes*0.15+25);
+            else moneyToPay+=(thisMonthMinutes*0.15+25)*0.985;
         }
         else if(thisMonthMinutes<=180&&thisMonthMinutes>120)
         {
             if(notPaidNumThisYear>3)
-                moneyToPay+=(thisMonthMinutes*0.25+25);
-            else moneyToPay+=(thisMonthMinutes*0.25+25)*0.98;
+                moneyToPay+=(thisMonthMinutes*0.15+25);
+            else moneyToPay+=(thisMonthMinutes*0.15+25)*0.98;
         }
         else if(thisMonthMinutes<=300&&thisMonthMinutes>180)
         {
             if(notPaidNumThisYear>3)
-                moneyToPay+=(thisMonthMinutes*0.25+25);
-            else moneyToPay+=(thisMonthMinutes*0.25+25)*0.975;
+                moneyToPay+=(thisMonthMinutes*0.15+25);
+            else moneyToPay+=(thisMonthMinutes*0.15+25)*0.975;
         }
         else if(thisMonthMinutes>300)
         {
             if(notPaidNumThisYear>6)
-                moneyToPay+=(thisMonthMinutes*0.25+25);
-            else moneyToPay+=(thisMonthMinutes*0.25+25)*0.97;
+                moneyToPay+=(thisMonthMinutes*0.15+25);
+            else moneyToPay+=(thisMonthMinutes*0.15+25)*0.97;
         }
         moneyToPay+=owingMoneyBeforeThisYear*0.05;
 
         bill=new PhoneBill(phoneNumber,notPaidNumThisYear,owingMoneyBeforeThisYear,thisMonthMinutes,moneyToPay);
         return bill;
+    }
+    public void insertPayrecord(String phonenumber,int year,int month , long minute,boolean haspaid)
+    {
+        databaseHelper.getWritableDatabase().execSQL("insert into payrecord values(null,?,?,?,?,?)",new Object[]{phonenumber,year,month,minute,haspaid});
+    }
+    public void insertAlipay(String account,String password,float balance)
+    {
+        databaseHelper.getWritableDatabase().execSQL("insert into alipay values(?,?,?)",new Object[]{account,password,balance});
+    }
+    public void insertBank(String account,String password,float balance)
+    {
+        databaseHelper.getWritableDatabase().execSQL("insert into bank values(?,?,?)",new Object[]{account,password,balance});
+    }
+    public void insertData()
+    {
+       insertAlipay("little","123",3);
+       insertBank("little","123",3);
+
+       insertAlipay("many","123",10000);
+       insertBank("many","123",10000);
+
+        insertPayrecord("111",2016,2,24,true);
+        insertPayrecord("111",2016,5,30,true);
+        insertPayrecord("111",2015,5,300,false);
+
+        insertPayrecord("112",2016,4,234,false);
+        insertPayrecord("112",2016,5,30,true);
+
+
+        insertPayrecord("113",2015,5,300,false);
+        insertPayrecord("113",2016,4,30,false);
+        insertPayrecord("113",2016,3,30,false);
+        insertPayrecord("113",2016,5,30,true);
+
+        insertPayrecord("114",2016,4,30,false);
+        insertPayrecord("114",2016,3,30,false);
+        insertPayrecord("114",2016,2,30,false);
+        insertPayrecord("114",2016,5,30,true);
+
+        insertPayrecord("115",2015,5,300,false);
+        insertPayrecord("115",2016,1,30,false);
+        insertPayrecord("115",2016,4,30,false);
+        insertPayrecord("115",2016,3,30,false);
+        insertPayrecord("115",2016,2,30,false);
+        insertPayrecord("115",2016,5,30,true);
+
+        insertPayrecord("116",2016,1,30,false);
+        insertPayrecord("116",2016,2,30,false);
+        insertPayrecord("116",2016,3,30,false);
+        insertPayrecord("116",2016,4,30,false);
+        insertPayrecord("116",2016,8,30,false);
+        insertPayrecord("116",2016,6,30,false);
+        insertPayrecord("116",2016,7,30,false);
+        insertPayrecord("116",2016,5,30,true);
+
+        insertPayrecord("117",2014,5,300,false);
+        insertPayrecord("117",2016,5,80,true);
+
+        insertPayrecord("118",2016,4,80,false);
+        insertPayrecord("118",2016,5,80,true);
+
+        insertPayrecord("119",2014,5,300,false);
+        insertPayrecord("119",2016,3,80,false);
+        insertPayrecord("119",2016,4,80,false);
+        insertPayrecord("119",2016,5,80,true);
+
+
+        insertPayrecord("120",2016,2,80,false);
+        insertPayrecord("120",2016,3,80,false);
+        insertPayrecord("120",2016,4,80,false);
+        insertPayrecord("120",2016,5,80,true);
+
+        insertPayrecord("121",2014,5,300,false);
+        insertPayrecord("121",2016,1,80,false);
+        insertPayrecord("121",2016,2,80,false);
+        insertPayrecord("121",2016,3,80,false);
+        insertPayrecord("121",2016,4,80,false);
+        insertPayrecord("121",2016,5,80,true);
+
+        insertPayrecord("122",2016,1,30,false);
+        insertPayrecord("122",2016,2,30,false);
+        insertPayrecord("122",2016,3,30,false);
+        insertPayrecord("122",2016,4,30,false);
+        insertPayrecord("122",2016,8,30,false);
+        insertPayrecord("122",2016,6,30,false);
+        insertPayrecord("122",2016,7,30,false);
+        insertPayrecord("122",2016,5,80,true);
+
+
+        insertPayrecord("123",2014,5,300,false);
+        insertPayrecord("123",2016,5,150,true);
+
+        insertPayrecord("124",2016,4,150,false);
+        insertPayrecord("124",2016,5,150,true);
+
+        insertPayrecord("125",2014,5,300,false);
+        insertPayrecord("125",2016,3,150,false);
+        insertPayrecord("125",2016,4,150,false);
+        insertPayrecord("125",2016,5,150,true);
+
+        insertPayrecord("126",2016,2,150,false);
+        insertPayrecord("126",2016,3,150,false);
+        insertPayrecord("126",2016,4,150,false);
+        insertPayrecord("126",2016,5,150,true);
+
+        insertPayrecord("127",2014,5,300,false);
+        insertPayrecord("127",2016,1,150,false);
+        insertPayrecord("127",2016,2,150,false);
+        insertPayrecord("127",2016,3,150,false);
+        insertPayrecord("127",2016,4,150,false);
+        insertPayrecord("127",2016,5,150,true);
+
+        insertPayrecord("128",2016,1,150,false);
+        insertPayrecord("128",2016,2,150,false);
+        insertPayrecord("128",2016,3,150,false);
+        insertPayrecord("128",2016,4,150,false);
+        insertPayrecord("128",2016,6,150,false);
+        insertPayrecord("128",2016,7,150,false);
+        insertPayrecord("128",2016,8,150,false);
+        insertPayrecord("128",2016,5,150,true);
+
+        insertPayrecord("129",2014,5,300,false);
+        insertPayrecord("129",2016,5,230,true);
+
+        insertPayrecord("130",2016,4,150,false);
+        insertPayrecord("130",2016,5,230,true);
+
+        insertPayrecord("131",2014,5,300,false);
+        insertPayrecord("131",2016,3,150,false);
+        insertPayrecord("131",2016,4,150,false);
+        insertPayrecord("131",2016,5,230,true);
+
+        insertPayrecord("132",2016,2,150,false);
+        insertPayrecord("132",2016,3,150,false);
+        insertPayrecord("132",2016,4,150,false);
+        insertPayrecord("132",2016,5,230,true);
+
+        insertPayrecord("133",2014,5,300,false);
+        insertPayrecord("133",2016,1,150,false);
+        insertPayrecord("133",2016,2,150,false);
+        insertPayrecord("133",2016,3,150,false);
+        insertPayrecord("133",2016,4,150,false);
+        insertPayrecord("133",2016,5,230,true);
+
+        insertPayrecord("134",2016,1,150,false);
+        insertPayrecord("134",2016,2,150,false);
+        insertPayrecord("134",2016,3,150,false);
+        insertPayrecord("134",2016,4,150,false);
+        insertPayrecord("134",2016,6,150,false);
+        insertPayrecord("134",2016,7,150,false);
+        insertPayrecord("134",2016,8,150,false);
+        insertPayrecord("134",2016,5,230,true);
+
+        insertPayrecord("135",2014,5,300,false);
+        insertPayrecord("135",2016,5,500,true);
+
+        insertPayrecord("136",2016,4,150,false);
+        insertPayrecord("136",2016,5,500,true);
+
+        insertPayrecord("137",2014,5,300,false);
+        insertPayrecord("137",2016,3,150,false);
+        insertPayrecord("137",2016,4,150,false);
+        insertPayrecord("137",2016,5,500,true);
+
+        insertPayrecord("138",2016,2,150,false);
+        insertPayrecord("138",2016,3,150,false);
+        insertPayrecord("138",2016,4,150,false);
+        insertPayrecord("138",2016,5,500,true);
+
+        insertPayrecord("139",2015,8,300,false);
+        insertPayrecord("139",2016,1,150,false);
+        insertPayrecord("139",2016,2,150,false);
+        insertPayrecord("139",2016,3,150,false);
+        insertPayrecord("139",2016,4,150,false);
+        insertPayrecord("139",2016,5,500,true);
+
+        insertPayrecord("140",2016,1,150,false);
+        insertPayrecord("140",2016,2,150,false);
+        insertPayrecord("140",2016,3,150,false);
+        insertPayrecord("140",2016,4,150,false);
+        insertPayrecord("140",2016,6,150,false);
+        insertPayrecord("140",2016,7,150,false);
+        insertPayrecord("140",2016,8,150,false);
+        insertPayrecord("140",2016,9,150,false);
+        insertPayrecord("140",2016,10,150,false);
+        insertPayrecord("140",2016,11,150,false);
+        insertPayrecord("140",2016,12,150,false);
+        insertPayrecord("140",2016,5,230,true);
+
+        System.out.println("insert ok");
+
     }
 
 }

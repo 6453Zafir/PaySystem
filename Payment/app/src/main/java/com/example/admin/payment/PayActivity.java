@@ -30,6 +30,7 @@ public class PayActivity extends AppCompatActivity {
         mContext = PayActivity.this;
 
         databaseHelper=new PaymentDatabaseHelper(getApplicationContext(),"payment",1);
+
         System.out.println(alipay("1","1223",800));
 
         TextView accountlabel = (TextView)findViewById(R.id.accountLabel);
@@ -259,5 +260,24 @@ public class PayActivity extends AppCompatActivity {
             databaseHelper.getReadableDatabase().execSQL("update bank set balance = ? where account=?",new Object[]{balance-fee,account});
             return PayStatus.SUCCESS;
         }
+    }
+    public float queryAliPayBalance(String account)
+    {
+        Cursor cursor=databaseHelper.getReadableDatabase().rawQuery("select balance from alipay where account=?",new String[]{account});
+        if(cursor!=null&&cursor.getCount()!=0) {
+            cursor.moveToNext();
+            return cursor.getFloat(0);
+        }
+
+        return -1;
+    }
+    public float queryBankBalance(String account)
+    {
+        Cursor cursor=databaseHelper.getReadableDatabase().rawQuery("select balance from bank where account=?",new String[]{account});
+        if(cursor!=null&&cursor.getCount()!=0) {
+            cursor.moveToNext();
+            return cursor.getFloat(0);
+        }
+        return -1;
     }
 }
