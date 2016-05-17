@@ -23,8 +23,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/PhoneNum"
+                android:text="@string/phoneNumString"
+                android:id="@+id/PhoneNuminBill"
                 android:layout_column="1"
                 style="@style/BillListRight"
                 android:layout_weight="0.7"
@@ -44,7 +44,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
+                android:text="@string/lastYear"
                 android:id="@+id/LastYear"
                 android:layout_column="1"
                 style="@style/BillListRight"/>
@@ -63,7 +63,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
+                android:text="@string/timeDelay"
                 android:id="@+id/Timedelay"
                 android:layout_column="1"
                 style="@style/BillListRight"/>
@@ -82,7 +82,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
+                android:text="@string/callTime"
                 android:id="@+id/phonecalltime"
                 android:layout_column="1"
                 style="@style/BillListRight"/>
@@ -106,8 +106,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="total"
-                android:id="@+id/textView12"
+                android:text="@string/total"
+                android:id="@+id/MoneyTopay"
                 android:layout_column="1"
                 style="@style/BillListRight"
                 android:textSize="25sp"/>

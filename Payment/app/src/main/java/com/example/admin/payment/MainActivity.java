@@ -2,8 +2,10 @@ package com.example.admin.payment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.FloatRange;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AlertDialog alert = null;
     private AlertDialog.Builder builder = null;
+    private AlertDialog.Builder buildernew = null;
     private Context mContext;
     private View billlist;
     private PaymentDatabaseHelper databaseHelper;
@@ -44,19 +48,43 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
-                        boolean isphoneNumExist = isphoneNumExist(inputPhomeNumtext.getText().toString());
+                        final String phoneNum = inputPhomeNumtext.getText().toString();
+                        boolean isphoneNumExist = isphoneNumExist(phoneNum);
                         if(isphoneNumExist){
+
+                            final PhoneBill phoneBill= queryBill(inputPhomeNumtext.getText().toString());
+
                             builder = new AlertDialog.Builder(mContext);
                             final LayoutInflater inflater = MainActivity.this.getLayoutInflater();
                             billlist = inflater.inflate(R.layout.billlist, null,false);
+
                             builder.setView(billlist);
+                            TextView PhoneNumInBill = (TextView)billlist.findViewById(R.id.PhoneNuminBill);
+                            PhoneNumInBill.setText(
+                                    phoneBill.getPhonenumber());
+                            TextView lastYear = (TextView)billlist.findViewById(R.id.LastYear);
+                            lastYear.setText(
+                                    Float.toString(phoneBill.getOwingMoneyBeforeThisYear()));
+                            TextView TimeDelay = (TextView)billlist.findViewById(R.id.Timedelay);
+                            TimeDelay.setText(
+                                    Integer.toString(phoneBill.getNotPaidNumThisYear()));
+                            TextView Calltime = (TextView)billlist.findViewById(R.id.phonecalltime);
+                            Calltime.setText(
+                                    Integer.toString(phoneBill.getThisMonthMinutes()));
+                            TextView Total = (TextView)billlist.findViewById(R.id.MoneyTopay);
+                            Total.setText(
+                                    Float.toString(phoneBill.getMoneyToPay()));
                             builder.setCancelable(false)
                                     .setTitle("账单")
                                     .setIcon(R.drawable.bill)
                                     .setPositiveButton("现在支付", new DialogInterface.OnClickListener(){
                                         @Override
                                         public void onClick(DialogInterface dialog, int which){
-                                        //支付方式选择
+                                        //支付方式选择页面
+                                            Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",phoneBill.getMoneyToPay());
+                                            startActivity(intent);
                                     }
                             })
                             .setNegativeButton("取消", new DialogInterface.OnClickListener(){
@@ -64,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which){
                                 }
                             });
-
                             alert = builder.create();
                             alert.show();
                         }else {
