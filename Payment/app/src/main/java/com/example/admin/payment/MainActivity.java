@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = MainActivity.this;
 
-//        insertData();//只运行一次
+        //insertData();//只运行一次
 
         inputPhoneNumBtn = (Button)findViewById(R.id.submitPhoneNum);
         inputPhomeNumtext =(EditText)findViewById(R.id.phoneNum);
@@ -122,9 +122,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Calendar cal=Calendar.getInstance();
         int year=cal.get(Calendar.YEAR);
-        int month=cal.get(Calendar.MONTH);
-        Log.v("year:",Integer.toString(year));
-        Log.v("month:",Integer.toString(month));
+        int month=cal.get(Calendar.MONTH)+1;
         Cursor cursor;
         PhoneBill bill;
         int notPaidNumThisYear;
