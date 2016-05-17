@@ -66,7 +66,7 @@ public class PayActivity extends AppCompatActivity {
                             alert = builder.setIcon(R.drawable.error)
                                     .setTitle("支付成功!")
                                     .setIcon(R.drawable.success)
-                                    .setMessage("恭喜!  "+ phoneNum + " 已缴费成功！")
+                                    .setMessage("恭喜!手机号 "+ phoneNum + " 已缴费成功！")
                                     .setPositiveButton("打印清单", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -109,6 +109,8 @@ public class PayActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee);
                                             startActivity(intent);
                                         }
                                     }).create();
@@ -117,7 +119,7 @@ public class PayActivity extends AppCompatActivity {
                             builder3 = new AlertDialog.Builder(mContext);
                             alert = builder3.setIcon(R.drawable.error)
                                     .setTitle("抱歉")
-                                    .setMessage("该账户余额不足，余额为: ")
+                                    .setMessage("该账户余额不足，余额为: "+queryAliPayBalance(account)+" 元")
                                     .setPositiveButton("更换付款方式", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -158,7 +160,7 @@ public class PayActivity extends AppCompatActivity {
                             alert = builder.setIcon(R.drawable.error)
                                     .setTitle("支付成功!")
                                     .setIcon(R.drawable.success)
-                                    .setMessage("恭喜!  "+ phoneNum + " 已缴费成功！")
+                                    .setMessage("恭喜!手机号 "+ phoneNum + " 已缴费成功！")
                                     .setPositiveButton("打印清单", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -201,6 +203,8 @@ public class PayActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee);
                                             startActivity(intent);
                                         }
                                     }).create();
@@ -209,11 +213,13 @@ public class PayActivity extends AppCompatActivity {
                             builder3 = new AlertDialog.Builder(mContext);
                             alert = builder3.setIcon(R.drawable.error)
                                     .setTitle("抱歉")
-                                    .setMessage("该账户余额不足，余额为: ")
+                                    .setMessage("该账户余额不足，余额为: "+queryBankBalance(account)+" 元")
                                     .setPositiveButton("更换付款方式", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee);
                                             startActivity(intent);
                                         }
                                     })
