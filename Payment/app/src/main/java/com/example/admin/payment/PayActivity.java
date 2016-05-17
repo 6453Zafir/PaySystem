@@ -138,7 +138,11 @@ public class PayActivity extends AppCompatActivity {
                                     .setNegativeButton("支付所剩余额", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee-queryAliPayBalance(account));
+                                            startActivity(intent);
+                                            alipay(account,password,queryAliPayBalance(account));
                                         }
                                     }).create();
                             alert.show();
@@ -232,7 +236,11 @@ public class PayActivity extends AppCompatActivity {
                                     .setNegativeButton("支付所剩余额", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee-queryBankBalance(account));
+                                            startActivity(intent);
+                                            bankpay(account,password,queryBankBalance(account));
                                         }
                                     }).create();
                             alert.show();

@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = MainActivity.this;
 
-        //insertData();//只运行一次
+//        insertData();//只运行一次
 
         inputPhoneNumBtn = (Button)findViewById(R.id.submitPhoneNum);
         inputPhomeNumtext =(EditText)findViewById(R.id.phoneNum);
