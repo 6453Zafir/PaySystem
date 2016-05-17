@@ -163,6 +163,13 @@ public class PayActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),Printlist.class);
+                                            intent.putExtra("fee",fee);
+                                            intent.putExtra("PayWay",payway);
+                                            intent.putExtra("PhoneNum",phoneNum);
+                                            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                                            Date today = Calendar.getInstance().getTime();
+                                            String reportDate = df.format(today);
+                                            intent.putExtra("Paytime",reportDate);
                                             startActivity(intent);
                                         }
                                     })

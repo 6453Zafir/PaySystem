@@ -21,7 +21,11 @@ public class Printlist extends AppCompatActivity {
         TextView PhoneNum = (TextView)findViewById(R.id.PHONENUM);
         PhoneNum.setText(phoneNum);
         TextView PayWay = (TextView)findViewById(R.id.PAYWAY);
-        PayWay.setText(payway);
+        if(payway.equals("alipay")){
+            PayWay.setText("支付宝");
+        }else if(payway.equals("bank")){
+            PayWay.setText("网上银行");
+        }
         TextView Fee = (TextView)findViewById(R.id.TOTAL);
         Fee.setText(fee);
         TextView Paytime = (TextView)findViewById(R.id.PAYTIME);
