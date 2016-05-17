@@ -15,7 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PayActivity"></activity>
+        <activity android:name=".PayActivity"
+            android:label="支付"/>
+        <activity android:name=".ChoosePayway"
+            android:label="请选择支付方式"></activity>
     </application>
 
 </manifest>

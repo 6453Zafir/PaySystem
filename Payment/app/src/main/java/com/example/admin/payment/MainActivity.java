@@ -2,6 +2,7 @@ package com.example.admin.payment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.FloatRange;
@@ -45,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
-                        boolean isphoneNumExist = isphoneNumExist(inputPhomeNumtext.getText().toString());
+                        final String phoneNum = inputPhomeNumtext.getText().toString();
+                        boolean isphoneNumExist = isphoneNumExist(phoneNum);
                         if(isphoneNumExist){
 
-                            PhoneBill phoneBill= queryBill(inputPhomeNumtext.getText().toString());
+                            final PhoneBill phoneBill= queryBill(inputPhomeNumtext.getText().toString());
 
                             builder = new AlertDialog.Builder(mContext);
                             final LayoutInflater inflater = MainActivity.this.getLayoutInflater();
@@ -76,17 +78,11 @@ public class MainActivity extends AppCompatActivity {
                                     .setPositiveButton("现在支付", new DialogInterface.OnClickListener(){
                                         @Override
                                         public void onClick(DialogInterface dialog, int which){
-                                        //支付方式选择
-                                            buildernew = new AlertDialog.Builder(mContext);
-                                            buildernew.setTitle("支付方式选择")
-                                                    .setIcon(R.drawable.pay)
-                                                    .setNegativeButton("取消",new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-
-                                                        }
-                                                    }).create();
-                                            alert.show();
+                                        //支付方式选择页面
+                                            Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",phoneBill.getMoneyToPay());
+                                            startActivity(intent);
                                     }
                             })
                             .setNegativeButton("取消", new DialogInterface.OnClickListener(){

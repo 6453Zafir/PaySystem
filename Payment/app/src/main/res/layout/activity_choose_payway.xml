@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.admin.payment.ChoosePayway">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="#eef1f5">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:background="#ffffff"
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/alipay"
+                android:scaleType="fitEnd" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="支付宝"
+                android:id="@+id/ChooseAlipay"
+                android:background="#00ffffff"
+                android:textSize="18dp"
+                android:layout_weight="0.37"
+                android:textAlignment="textStart"
+                android:paddingStart="10dp"
+                android:onClick="ToaliPay"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#ffffff"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView2"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_vertical"
+                android:background="#00ffffff"
+                android:src="@drawable/bank"
+                android:scaleType="fitEnd" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="网上银行"
+                android:id="@+id/button"
+                android:layout_weight="0.5"
+                android:background="#00ffffff"
+                android:textSize="18dp"
+                android:textAlignment="textStart"
+                android:paddingStart="10dp"
+                android:onClick="ToBank"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
