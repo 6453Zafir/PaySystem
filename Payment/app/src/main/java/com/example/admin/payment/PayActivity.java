@@ -36,7 +36,7 @@ public class PayActivity extends AppCompatActivity {
 
         databaseHelper=new PaymentDatabaseHelper(getApplicationContext(),"payment",1);
 
-        System.out.println(alipay("1","1223",800));
+        System.out.println(bankpay("1111111111","123",45));
 
         TextView accountlabel = (TextView)findViewById(R.id.accountLabel);
         TextView passwordlabel = (TextView)findViewById(R.id.passwordLabel);
@@ -158,7 +158,7 @@ public class PayActivity extends AppCompatActivity {
                     public void onClick(View v){
                         final String account = accountEdit.getText().toString();
                         final String password = passwordEdit.getText().toString();
-                        PayStatus result =  alipay(account,password,fee);
+                        PayStatus result =  bankpay(account,password,fee);
                         if(result == PayStatus.SUCCESS){
                             builder = new AlertDialog.Builder(mContext);
                             alert = builder.setIcon(R.drawable.error)

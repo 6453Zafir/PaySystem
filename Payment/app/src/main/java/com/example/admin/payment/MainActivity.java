@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mContext = MainActivity.this;
 
 
-       // insertData();//只运行一次
+        insertData();//只运行一次
 
 
         inputPhoneNumBtn = (Button)findViewById(R.id.submitPhoneNum);
@@ -203,12 +203,12 @@ public class MainActivity extends AppCompatActivity {
         insertAlipay("little","123",3);
         insertAlipay("little2","123",25);
         insertAlipay("little3","123",40);
-        insertBank("19940531","123",3);
-        insertBank("19940532","123",25);
-        insertBank("19940533","123",40);
+        insertBank("0000000000","123",3);
+        insertBank("2222222222","123",25);
+        insertBank("1111111111","123",40);
 
-       insertAlipay("many","123",10000);
-       insertBank("19941205","123",10000);
+       insertAlipay("many","123",1000);
+       insertBank("9999999999","123",1000);
 
         insertPayrecord("111",2016,2,24,true);
         insertPayrecord("111",2016,5,30,true);
