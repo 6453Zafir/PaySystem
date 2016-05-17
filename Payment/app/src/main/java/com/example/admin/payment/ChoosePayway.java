@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class ChoosePayway extends AppCompatActivity {
 
@@ -17,6 +19,8 @@ public class ChoosePayway extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         phoneNum = extras.getString("phoneNum");
         fee = extras.getFloat("fee");
+        TextView feeToPay = (TextView)findViewById(R.id.feeToPay);
+        feeToPay.setText(Float.toString(fee));
     }
 
     public void ToaliPay(View view){

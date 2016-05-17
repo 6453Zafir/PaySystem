@@ -29,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/accountinput"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:singleLine="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +45,8 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/passwordinput"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:singleLine="true" />
 
         <Button
             android:layout_width="match_parent"

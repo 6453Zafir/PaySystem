@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class PayActivity extends AppCompatActivity {
 
     private Float fee;
@@ -41,7 +46,7 @@ public class PayActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         final String phoneNum = extras.getString("phoneNum");
-        String payway = extras.getString("PayWay");
+        final String payway = extras.getString("PayWay");
         fee = extras.getFloat("fee");
 
         Button submitBtn = (Button)findViewById(R.id.submit);
@@ -61,11 +66,18 @@ public class PayActivity extends AppCompatActivity {
                             alert = builder.setIcon(R.drawable.error)
                                     .setTitle("支付成功!")
                                     .setIcon(R.drawable.success)
-                                    .setMessage("恭喜!  "+ phoneNum + " 已缴费成功！")
+                                    .setMessage("恭喜!手机号 "+ phoneNum + " 已缴费成功！")
                                     .setPositiveButton("打印清单", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),Printlist.class);
+                                            intent.putExtra("fee",fee);
+                                            intent.putExtra("PayWay",payway);
+                                            intent.putExtra("PhoneNum",phoneNum);
+                                            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                                            Date today = Calendar.getInstance().getTime();
+                                            String reportDate = df.format(today);
+                                            intent.putExtra("Paytime",reportDate);
                                             startActivity(intent);
                                         }
                                     })
@@ -97,6 +109,8 @@ public class PayActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee);
                                             startActivity(intent);
                                         }
                                     }).create();
@@ -105,11 +119,13 @@ public class PayActivity extends AppCompatActivity {
                             builder3 = new AlertDialog.Builder(mContext);
                             alert = builder3.setIcon(R.drawable.error)
                                     .setTitle("抱歉")
-                                    .setMessage("该账户余额不足，余额为: ")
+                                    .setMessage("该账户余额不足，余额为: "+queryAliPayBalance(account)+" 元")
                                     .setPositiveButton("更换付款方式", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee);
                                             startActivity(intent);
                                         }
                                     })
@@ -122,7 +138,11 @@ public class PayActivity extends AppCompatActivity {
                                     .setNegativeButton("支付所剩余额", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee-queryAliPayBalance(account));
+                                            startActivity(intent);
+                                            alipay(account,password,queryAliPayBalance(account));
                                         }
                                     }).create();
                             alert.show();
@@ -144,11 +164,18 @@ public class PayActivity extends AppCompatActivity {
                             alert = builder.setIcon(R.drawable.error)
                                     .setTitle("支付成功!")
                                     .setIcon(R.drawable.success)
-                                    .setMessage("恭喜!  "+ phoneNum + " 已缴费成功！")
+                                    .setMessage("恭喜!手机号 "+ phoneNum + " 已缴费成功！")
                                     .setPositiveButton("打印清单", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),Printlist.class);
+                                            intent.putExtra("fee",fee);
+                                            intent.putExtra("PayWay",payway);
+                                            intent.putExtra("PhoneNum",phoneNum);
+                                            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                                            Date today = Calendar.getInstance().getTime();
+                                            String reportDate = df.format(today);
+                                            intent.putExtra("Paytime",reportDate);
                                             startActivity(intent);
                                         }
                                     })
@@ -180,6 +207,8 @@ public class PayActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee);
                                             startActivity(intent);
                                         }
                                     }).create();
@@ -188,11 +217,13 @@ public class PayActivity extends AppCompatActivity {
                             builder3 = new AlertDialog.Builder(mContext);
                             alert = builder3.setIcon(R.drawable.error)
                                     .setTitle("抱歉")
-                                    .setMessage("该账户余额不足，余额为: ")
+                                    .setMessage("该账户余额不足，余额为: "+queryBankBalance(account)+" 元")
                                     .setPositiveButton("更换付款方式", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee);
                                             startActivity(intent);
                                         }
                                     })
@@ -205,7 +236,11 @@ public class PayActivity extends AppCompatActivity {
                                     .setNegativeButton("支付所剩余额", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            Intent intent = new Intent(getBaseContext(),ChoosePayway.class);
+                                            intent.putExtra("phoneNum",phoneNum);
+                                            intent.putExtra("fee",fee-queryBankBalance(account));
+                                            startActivity(intent);
+                                            bankpay(account,password,queryBankBalance(account));
                                         }
                                     }).create();
                             alert.show();
