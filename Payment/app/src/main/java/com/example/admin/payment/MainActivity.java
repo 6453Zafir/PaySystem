@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = MainActivity.this;
 
-        //insertData();//只运行一次
+       // insertData();//只运行一次
 
         inputPhoneNumBtn = (Button)findViewById(R.id.submitPhoneNum);
         inputPhomeNumtext =(EditText)findViewById(R.id.phoneNum);
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         {
             if(notPaidNumThisYear>1)
                 moneyToPay+=(thisMonthMinutes*0.15+25);
-            else moneyToPay+=(thisMonthMinutes*0.15+25)*0.099;
+            else moneyToPay+=(thisMonthMinutes*0.15+25)*0.99;
         }
         else if(thisMonthMinutes<=120&&thisMonthMinutes>60)
         {
@@ -198,11 +198,15 @@ public class MainActivity extends AppCompatActivity {
     }
     public void insertData()
     {
-       insertAlipay("little","123",3);
-       insertBank("little","123",3);
+        insertAlipay("little","123",3);
+        insertAlipay("little2","123",25);
+        insertAlipay("little3","123",40);
+        insertBank("19940531","123",3);
+        insertBank("19940532","123",25);
+        insertBank("19940533","123",40);
 
        insertAlipay("many","123",10000);
-       insertBank("many","123",10000);
+       insertBank("19941205","123",10000);
 
         insertPayrecord("111",2016,2,24,true);
         insertPayrecord("111",2016,5,30,true);
@@ -370,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
         insertPayrecord("140",2016,10,150,false);
         insertPayrecord("140",2016,11,150,false);
         insertPayrecord("140",2016,12,150,false);
-        insertPayrecord("140",2016,5,230,true);
+        insertPayrecord("140",2016,5,500,true);
 
         System.out.println("insert ok");
 
