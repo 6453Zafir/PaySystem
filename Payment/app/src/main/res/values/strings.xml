@@ -3,4 +3,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="phoneNumString">12345678901</string>
+    <string name="lastYear">100</string>
+    <string name="timeDelay">2</string>
+    <string name="callTime">120</string>
+    <string name="total">200</string>
 </resources>
